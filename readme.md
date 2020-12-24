@@ -10,6 +10,10 @@
 <a href="https://imgur.com/PqNE85k"><img src="https://i.imgur.com/PqNE85k.jpg?1" title="source: imgur.com" /></a>
 
 ## 衣服商城購物車系統
+
+## 部屬後的網站
+http://shopweb20201221.herokuapp.com/
+
 ## 網站功能
 //不用登入就能使用的路由</br>
 Route::get('shop','GoodController@show_all')->name('shop');//購物首頁
