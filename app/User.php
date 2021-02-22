@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id','name', 'email', 'password',
     ];
 
     /**
@@ -37,9 +37,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cart(){
+    public function carts(){
 
-        return $this->belongsTo(Cart::class);
+        return $this->hasOne(Cart::class);
     }
 
     public function Orders(){

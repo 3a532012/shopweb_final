@@ -32,8 +32,8 @@ $photo2=Good::where('id','=',$id)->value('photo2');
 $type=Good::where('id','=',$id)->value('type');
 
 $add=DB::table('carts')->insert(['price'=>$price,
-    'size'=>$size,
-    'quantity'=>$quantity,
+    'size'=>$request->size,
+    'quantity'=>$request->quantity,
     'goodsname1'=>$goodsname1,
     'goodsname2'=>$goodsname2,
     'photo1'=>$photo1,
@@ -134,10 +134,6 @@ public function order_detail($id){
 
 
 }
-public function ooddr(){
 
-
-    return response('123',200)->header('Content-Type','text-plain');
-}
 
 }

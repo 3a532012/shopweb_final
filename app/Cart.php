@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    public function users(){
 
-        return $this->hasOne(User::class);
+    public function User(){
+
+        return $this->belongsTo(Cart::class);
     }
 
     public function Goods(){
