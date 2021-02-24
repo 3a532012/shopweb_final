@@ -22,7 +22,7 @@ class SocialController extends Controller
     public function getSocialRedirect ($provider)
    {
        $providerKey = Config::get('services.' . $provider);
-       if(empty($providerKey)){
+       if (empty($providerKey)) {
            return App::abort(404);
        }
        return Socialite::driver($provider)->redirect();
@@ -33,9 +33,9 @@ class SocialController extends Controller
     {
         $socialite_user = Socialite::with($provider)->user();
         $user=User::where('email', $socialite_user->email)->where('provider',$provider)->first();
-        if(!empty($user)){
+        if (!empty($user)) {
             $login_user = $user; //使用之前的帳號登入
-        }else{
+        }else {
             //建立帳號
             $new_user = new User([
                 'email' => $socialite_user->email,
@@ -51,7 +51,7 @@ class SocialController extends Controller
             $new_socialUser->save();
             $login_user=$new_user;
         }
-        if(!is_null($login_user)){
+        if (!is_null($login_user)) {
             Auth::login($login_user); //設定為驗證過的登入者
             return Redirect::action('HomeController@index');
         }
