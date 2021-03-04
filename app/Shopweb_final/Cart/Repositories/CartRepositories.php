@@ -49,6 +49,11 @@ class CartRepositories
         Cart::where('user_id', $userId)->where('id', $id)->delete();
 
     }
+    public function deleteAllGoodsInCart($userId)
+    {
+        DB::table('carts')->where('user_id',$userId)->delete();
+
+    }
 
 
 }

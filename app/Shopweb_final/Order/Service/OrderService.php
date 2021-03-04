@@ -40,7 +40,7 @@ class OrderService
         }
         $numbb = date('ymdhis') . "-" . rand(0, 10);//用亂數產生訂單編號
         $this->OrderRepositories->putCartIntoOrder($show, $numbb, $number);
-        $this->CartRepositories->deleteGoodsInCart($userId);//刪除與使用者相同id的購物車商品資訊
+        $this->CartRepositories->deleteAllGoodsInCart($userId);//刪除與使用者相同id的購物車商品資訊
         return redirect(route('order_show'))->with('message', '成功新增');//回傳資料
     }
 
