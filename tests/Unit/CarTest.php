@@ -19,19 +19,21 @@ class CarTest extends TestCase
      * @return void
      */
 
+
     public function testCartAdd()
     {
+
         $this->initDatabase();
-        $a=DB::table('goods')
-            ->where('id',3)
+        $a = DB::table('goods')
+            ->where('id', 3)
             ->value('goodsname1');
         $this->loginWithFakeUser();
         $this->call(
             'POST',
             'membership/cart_add/3',
-            ['size'=>'x', 'quantity'=>'10', '_token'=>csrf_token()]);
+            ['size' => 'x', 'quantity' => '10', '_token' => csrf_token()]);
         $this->assertDatabaseHas('carts',
-            ['user_id'=>Auth::user()->id, 'goodsname1'=>$a]);
+            ['user_id' => Auth::user()->id, 'goodsname1' => $a]);
 
 
     }
@@ -40,7 +42,7 @@ class CarTest extends TestCase
     {
         $this->initDatabase();
         $this->loginWithFakeUser();
-        $response=$this->call('get','membership/cart_show');
+        $response = $this->call('get', 'membership/cart_show');
         $response->assertViewIs('cart');
     }
 
@@ -48,48 +50,57 @@ class CarTest extends TestCase
     {
         //$this->initDatabase();
         $this->loginWithFakeUser();
-        $vaule=DB::table('carts')
+        $vaule = DB::table('carts')
             ->where('user_id', Auth::user()->id)
             ->first();
 
         $this->call(
             'DELETE',
             "membership/cart_delete/{$vaule->id}",
-            ['_token'=>csrf_token()]);
+            ['_token' => csrf_token()]);
         $this->assertDatabaseMissing(
             'carts',
-            ['user_id'=>Auth::user()->id, 'id'=>$vaule->id]);
+            ['user_id' => Auth::user()->id, 'id' => $vaule->id]);
 
     }
+
     public function testCartCheckout()
     {
         Session::flush();
         $this->loginWithFakeUser();
-        $respone=$this->call(
+        $respone = $this->call(
             'GET',
             "membership/checkout");
-            $respone->assertSessionHas(['message'=>'購物車無商品,無法下單']);
-            $respone->assertViewIs('checkout');
+        $respone->assertSessionHas(['message' => '購物k法下單']);
+        $respone->assertViewIs('checkout');
     }
+
     public function testCartOrderCreate()
     {
         Session::flush();
         $this->loginWithFakeUser();
-        $respone=$this->call(
+        $respone = $this->call(
             'GET',
             "membership/order_create");
-        $respone->assertSessionHas(['message'=>'成功新增']);
+        $respone->assertSessionHas(['message' => '成功新增']);
     }
+
     public function testCartOrderShow()
     {
         Session::flush();
         $this->loginWithFakeUser();
-        $respone=$this->call(
+        $respone = $this->call(
             'GET',
             "membership/order_show");
-            $respone->assertSessionHas(['message'=>'沒有訂單']);
-            $respone->assertViewIs('order');
-            $respone->assertViewHas('date');
+        $respone->assertSessionHas(['message' => '沒有訂單']);
+        $respone->assertViewIs('order');
+        $respone->assertViewHas('date');
+    }
+
+    public function testGetUserID()
+    {
+
+
     }
 
 }

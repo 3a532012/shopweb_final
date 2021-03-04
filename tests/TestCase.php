@@ -17,12 +17,20 @@ abstract class TestCase extends BaseTestCase
         ]);
 
         $this->be($user);
+        return $this;
     }
     public function initDatabase()
     {
         Artisan::call('migrate:reset');
         Artisan::call('migrate');
         Artisan::call('db:seed');
+    }
+    protected function initMock($class)
+    {
+        $mock = \Mockery::mock($class);
+        $this->app->instance($class, $mock);
+
+        return $mock;
     }
 
 }

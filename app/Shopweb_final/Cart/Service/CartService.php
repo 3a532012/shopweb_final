@@ -5,7 +5,7 @@ namespace App\Shopweb_final\Cart\Service;
 
 
 use App\Good;
-use App\Shopweb_final\Goods\Service\GoodsService;
+use App\Shopweb_final\Goods\Repositories\GoodsRepositories;
 use App\Shopweb_final\Cart\Repositories\CartRepositories;
 use App\Shopweb_final\Order\Repositories\OrderRepositories;
 use App\Shopweb_final\User\Repositories\UserRepositories;
@@ -15,24 +15,27 @@ use Illuminate\Support\Facades\DB;
 class CartService
 {
     public function __construct(
-        GoodsService $GoodsService,
+        GoodsRepositories $GoodsRepositories,
         CartRepositories $CartRepositories,
         UserRepositories $UserRepositories,
         OrderRepositories $OrderRepositories
 
     )
     {
-        $this->GoodsService=$GoodsService;
+        $this->GoodsRepositories=$GoodsRepositories;
         $this->CartRepositories=$CartRepositories;
         $this->OrderRepositories=$OrderRepositories;
         $this->UserRepositories=$UserRepositories;
 
     }
-    public function addGoodsInCart(Request $request, $id)
+    public function addGoodsInCart($input, $id)
     {
 
-            $vaule = $this->GoodsService->findGoodsById($id);
-            $this->CartRepositories->insertGoodsInCart($request, $vaule);
+
+            $vaule = $this->GoodsRepositories->getGoodsById($id);
+            $this->CartRepositories->insertGoodsInCart($input, $vaule);
+
+        return TRUE;
     }
 
     public function getGoodsInCart()

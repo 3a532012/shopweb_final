@@ -14,6 +14,7 @@ class UserRepositories
     {
 
     }
+
     public function getUserId()
     {
 

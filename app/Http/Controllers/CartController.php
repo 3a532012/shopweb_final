@@ -19,8 +19,10 @@ class CartController extends Controller
 
     public function add(Request $request, $id)
     {
+        $input=['size'=>$request->size,'quantity'=>$request->quantity,'user_id'=>$request->user()->id];
+
         try {
-            $this->CartService->addGoodsInCart($request, $id);
+            $this->CartService->addGoodsInCart($input, $id);
         } catch (\Exception $exception){
             throw $exception;
         }
