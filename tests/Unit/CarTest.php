@@ -97,10 +97,6 @@ class CarTest extends TestCase
         $respone->assertViewHas('date');
     }
 
-    public function testGetUserID()
-    {
 
-
-    }
 
 }

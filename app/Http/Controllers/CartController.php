@@ -57,7 +57,8 @@ class CartController extends Controller
 
     public function order_create()
     {
-        $this->OrderService->creatOrder();
+       return $this->OrderService->creatOrder();
+
     }
 
     public function order_show1()
@@ -68,18 +69,21 @@ class CartController extends Controller
     public function order_show()
     {
         $test=$this->OrderService->getUserOrder();
+
         if ($test==null) {
+
             return  redirect(route('order_show1'))->with('message','沒有訂單');
         }
         else {
-            $this->OrderService->showOrder();
+
+            return $this->OrderService->showOrder();
 
         }
     }
 
     public function order_detail($id)
     {
-        $this->OrderService->showOrderDetail($id);
+       return $this->OrderService->showOrderDetail($id);
     }
 }
 

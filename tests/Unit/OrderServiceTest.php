@@ -43,7 +43,7 @@ class OrderServiceTest extends TestCase
         $this->orderService->creatOrder();
         $actual = DB::table('orders')->where('user_id', 87)->first();
         $this->assertEquals($number, $actual->total);
-        
+
 
     }
 
