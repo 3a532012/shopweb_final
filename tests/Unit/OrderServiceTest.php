@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Unit\CartServiceTest;
 
 class OrderServiceTest extends TestCase
 {
@@ -28,20 +29,24 @@ class OrderServiceTest extends TestCase
         $this->orderService = new OrderService($this->OrderRepositories,
             $this->CartRepositories,
             $this->UserRepositories);
+        $this->cartService = new CartServiceTest();
+
         $this->loginWithFakeUser();
+
     }
 
     public function testCreatOrder()
-        //執行該方法前要先執行testCartService->testCartServiceAddGoodsInCart讓DB有東西
+
     {
 
+
         $number = 0;
-        $expect = DB::table('carts')->where('user_id', 87)->get();
+        $expect = DB::table('carts')->where('user_id', 49)->get();
         foreach ($expect as $abc) {
             $number = $number + $abc->price * $abc->quantity;//計算購物車總金額
         }
         $this->orderService->creatOrder();
-        $actual = DB::table('orders')->where('user_id', 87)->first();
+        $actual = DB::table('orders')->where('user_id', 49)->first();
         $this->assertEquals($number, $actual->total);
 
 

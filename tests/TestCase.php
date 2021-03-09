@@ -12,7 +12,7 @@ abstract class TestCase extends BaseTestCase
     public function loginWithFakeUser()
     {
         $user = new User([
-            'id' => 87,
+            'id' => 49,
             'name' => 'yish'
         ]);
 
