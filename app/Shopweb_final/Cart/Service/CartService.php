@@ -16,12 +16,17 @@ namespace App\Shopweb_final\Cart\Service;
  * @method CartService getGoodsInCart()
  * @method CartService deleteGoodsInCart($id)
  */
+
+use App\Cart;
 use App\Good;
+use App\Order;
 use App\Shopweb_final\Goods\Repositories\GoodsRepositories;
 use App\Shopweb_final\Cart\Repositories\CartRepositories;
 use App\Shopweb_final\Order\Repositories\OrderRepositories;
 use App\Shopweb_final\User\Repositories\UserRepositories;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 
@@ -57,12 +62,10 @@ class CartService
      * @todo (若method尚有功能未完成，可寫在@todo裡)
      * @DEPRECATED (若該API或public method即將在未來版本停用，可加上@depricated，後面加上註解，PhpStorm對於@depricated有特別的支援。)
      */
-    public function addGoodsInCart($input, $id)
+    public function addGoodsInCart($input)
     {
 
-
-            $vaule = $this->GoodsRepositories->getGoodsById($id);
-            $this->CartRepositories->insertGoodsInCart($input, $vaule);
+            $this->CartRepositories->insertGoodsInCart($input);
 
         return TRUE;
     }

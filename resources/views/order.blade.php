@@ -40,7 +40,7 @@
             </td>
         </tr>
 @isset($date)
-@foreach( $date as $data)
+@foreach( $date as $data )
 
             <tr >
                 <td width="200" align="center" valign="center">
@@ -50,7 +50,7 @@
                 </td>
                 <td width="250" align="center" valign="center">
                     <div class="product-right">
-                     <u><a  href="{{route('order_detail',$data->order_id)}}">{{$data->order_id}}</a></u>
+                     <u><a  href="{{route('order_detail',$data->orderNumber)}}">{{$data->orderNumber}}</a></u>
                     </div>
                 </td>
 

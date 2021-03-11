@@ -4,6 +4,7 @@
 namespace App\Shopweb_final\Order\Repositories;
 
 
+use App\Cart;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,23 +17,19 @@ class OrderRepositories
 
     }
 
-    public function putCartIntoOrder($show,$numbb,$number)
+    public function putCartIntoOrder($numbb,$number)
     {
-        foreach ($show as $abc) {//將購物車每一筆存入訂單資料表中 並賦予訂單編號欄位
+
             $create_order = new Order();
-            $create_order->order_id = $numbb;
-            $create_order->price = $abc->price;
-            $create_order->size = $abc->size;
-            $create_order->quantity = $abc->quantity;
-            $create_order->goodsname1 = $abc->goodsname1;
-            $create_order->goodsname2 = $abc->goodsname2;
-            $create_order->photo1 = $abc->photo1;
-            $create_order->photo2 = $abc->photo2;
-            $create_order->type = $abc->type;
+            $create_order->orderNumber = $numbb;
             $create_order->total = $number;
             $create_order->user_id = Auth::user()->id;
             $create_order->save();
-        }
+            DB::table('carts')
+                ->where('user_id','=',Auth::user()->id)
+                ->update(['orders_id'=>$numbb]);
+
+
     }
 
     public function getUserOrder($userId)
@@ -42,10 +39,14 @@ class OrderRepositories
     }
     public function showOrderDetail($id)
     {
-        $show=DB::table('users')
-            ->leftJoin('orders','users.id','=','user_id')
-            ->where('order_id','=',$id)
-            ->get();
-        return $show;
+        $show=DB::table('orders')->where('orderNumber',$id)->get();
+        $showProduct=Cart::onlyTrashed()
+                    ->leftJoin('goods','carts.goodsId','=','goods.id')
+                    ->leftJoin('users','carts.user_id','=','users.id')
+                    ->where('carts.orders_id',$id)
+                    ->get();
+
+
+        return $show=['show'=>$show,'showProduct'=>$showProduct];
     }
 }

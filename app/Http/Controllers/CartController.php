@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Cart;
 use App\Shopweb_final\Cart\Service\CartService;
 use App\Shopweb_final\Order\Service\OrderService;
+use App\User;
 use Redirect;
 use Illuminate\Http\Request;
 class CartController extends Controller
@@ -19,10 +21,14 @@ class CartController extends Controller
 
     public function add(Request $request, $id)
     {
-        $input=['size'=>$request->size,'quantity'=>$request->quantity,'user_id'=>$request->user()->id];
+
+        $input=['size'=>$request->size,
+            'quantity'=>$request->quantity,
+            'user_id'=>$request->user()->id,
+            'goodsId'=>$id];
 
         try {
-            $this->CartService->addGoodsInCart($input, $id);
+            $this->CartService->addGoodsInCart($input);
         } catch (\Exception $exception){
             throw $exception;
         }

@@ -45,6 +45,7 @@
 
 
 @foreach($data as $show)
+
         <tr>
             <td width="200" align="center" valign="center">
                 <div class="product-left">
@@ -83,13 +84,13 @@
 
         <td width="300" align="center" valign="center">
             <div class="product-left">
-                <h5 style="text-align:left">總金額:{{$show->total}}</h5>
+                <h5 style="text-align:left">總金額:{{$showOrder[0]->total}}</h5>
             </div>
             <div class="product-left">
-                <h5 style="text-align:left">下單時間:{{$show->created_at}}</h5>
+                <h5 style="text-align:left">下單時間:{{$showOrder[0]->created_at}}</h5>
             </div>
             <div class="product-left">
-                <h5 style="text-align:left">購買人姓名:{{$show->name}}</h5>
+                <h5 style="text-align:left">購買人姓名:{{$data[0]->name}}</h5>
             </div>
         </td>
     </table>
