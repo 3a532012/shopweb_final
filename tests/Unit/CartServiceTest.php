@@ -39,9 +39,9 @@ class CartServiceTest extends TestCase
     public function testAddGoodsInCart()
     {
 
-        $input = ['size' => 'x', 'quantity' => '87', 'user_id' => '49'];
-        $actutal = $this->cartService->addGoodsInCart($input, 3);
-        $makeResultIsTure = Cart::where(['size' => 'x', 'quantity' => '87', 'user_id' => '49',])->exists();
+        $input = ['size' => 'x', 'quantity' => '87', 'user_id' => '49','goodsId'=>3];
+        $actutal = $this->cartService->addGoodsInCart($input);
+        $makeResultIsTure = Cart::where(['size' => 'x', 'quantity' => '87', 'user_id' => '49','goodsId'=>3])->exists();
         $this->assertSame(TRUE, $actutal);
         $this->assertSame(TRUE, $makeResultIsTure);
 
@@ -51,7 +51,10 @@ class CartServiceTest extends TestCase
     public function testGetGoodsInCart()
     {
         $this->testAddGoodsInCart();
-        $expect = DB::table('carts')->where('user_id', 49)->paginate(5);
+        $expect = Cart::where('user_id', 49)
+            ->leftJoin('goods','carts.goodsId','=','goods.id')
+            ->select('goods.photo1','goods.goodsname1','goods.price','carts.size','carts.quantity','carts.id')
+            ->paginate(5);
         $returnResult = $this->cartService->getGoodsInCart();
         $this->assertEquals($expect, $returnResult);
         $this->initDatabase();
@@ -63,9 +66,9 @@ class CartServiceTest extends TestCase
     {
 
         $this->testAddGoodsInCart();
-        $deleteTargetId = DB::table('carts')->where('user_id', 49)->first();
+        $deleteTargetId = Cart::where('user_id', 49)->first();
         $this->cartService->deleteGoodsInCart($deleteTargetId->id);
-        $actual = DB::table('carts')->where('id', $deleteTargetId->id)->exists();
+        $actual = Cart::where('id', $deleteTargetId->id)->exists();
         $this->assertEquals(false, $actual);
         $this->initDatabase();
 

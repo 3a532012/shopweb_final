@@ -53,10 +53,8 @@ class OrderService
     public function showOrder()
     {
         $userId = $this->UserRepositories->getUserId();
-        $order_show = DB::table('orders')
-                    ->leftJoin('users','orders.user_id','=','users.id')
-                    ->where('user_id',$userId)
-                    ->get();
+        $order_show = $this->OrderRepositories->getUserOrder($userId);
+
 
 
         return view('order', ['date' => $order_show]);

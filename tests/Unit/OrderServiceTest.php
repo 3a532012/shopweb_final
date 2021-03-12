@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Cart;
 use App\Shopweb_final\Cart\Repositories\CartRepositories;
 use App\Shopweb_final\Order\Repositories\OrderRepositories;
 use App\Shopweb_final\Order\Service\OrderService;
@@ -41,8 +42,9 @@ class OrderServiceTest extends TestCase
 
 
         $number = 0;
-        $expect = DB::table('carts')->where('user_id', 49)->get();
-        foreach ($expect as $abc) {
+        $show = $this->CartRepositories->getUserCart(49);//先抓出購物車裡和user.id相同的商品
+
+        foreach ($show as $abc) {
             $number = $number + $abc->price * $abc->quantity;//計算購物車總金額
         }
         $this->orderService->creatOrder();
